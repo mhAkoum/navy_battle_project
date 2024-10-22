@@ -28,8 +28,10 @@ public class Launcher {
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         ExecutorService executor = Executors.newFixedThreadPool(1);
         server.setExecutor(executor);
+        GameState gameState = new GameState();
         server.createContext("/ping", new PingHandler());
         server.createContext("/api/game/start", new StartGameHandler(port));
+        server.createContext("/api/game/fire", new FireHandler(gameState));
         server.start();
         System.out.println("server is running on port: " + port);
     }
